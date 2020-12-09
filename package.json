@@ -7,7 +7,8 @@
     "test": "tests"
   },
   "dependencies": {
-    "rooibos-cli": "^1.0.1"
+    "rooibos-cli": "^1.0.1",
+    "brighterscript": "^0.22.0"
   },
   "devDependencies": {},
   "scripts": {
