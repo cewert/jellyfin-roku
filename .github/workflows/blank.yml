@@ -20,13 +20,13 @@ jobs:
         with:
           node-version: 12
 
-      - name: Install Node.js dependencies
-        run: yarn install --frozen-lockfile
-        env:
-          SKIP_PREPARE: true
+#       - name: Install Node.js dependencies
+#         run: yarn install --frozen-lockfile
+#         env:
+#           SKIP_PREPARE: true
           
       - name: Install brighterscript globally
         run: npm install -g brighterscript
 
       - name: Run brighterscript
-        run: bsc --copy-to-staging false
+        run: bsc --create-package false --copy-to-staging false
