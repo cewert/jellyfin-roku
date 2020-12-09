@@ -24,6 +24,9 @@ jobs:
         run: yarn install --frozen-lockfile
         env:
           SKIP_PREPARE: true
+          
+      - name: test
+        run: print $pwd
 
       - name: Run brighterscript
-        run: bsc --copy-to-staging false
+        run: npm bsc --copy-to-staging false
