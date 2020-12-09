@@ -28,5 +28,5 @@ jobs:
       - name: Install brighterscript globally
         run: npm install -g brighterscript @rokucommunity/bslint
 
-      - name: Run code with brighterscript
-        run: bsc --create-package false --copy-to-staging false
+      - name: Lint with brighterscript
+        run: npx bslint
