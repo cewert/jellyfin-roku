@@ -26,7 +26,10 @@ jobs:
 #           SKIP_PREPARE: true
           
       - name: Install brighterscript globally
-        run: npm install -g brighterscript rokucommunity/bslint
+        run: npm install -g brighterscript
+        
+      - name: Install bslint module for brighterscript
+        run: npm install @rokucommunity/bslint
 
       - name: Lint with brighterscript
         run: npx bslint
