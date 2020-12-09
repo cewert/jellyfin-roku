@@ -25,8 +25,8 @@ jobs:
         env:
           SKIP_PREPARE: true
           
-      - name: test
-        run: echo $pwd
+      - name: Install brighterscript globally
+        run: npm install -g brighterscript
 
       - name: Run brighterscript
         run: bsc --copy-to-staging false
