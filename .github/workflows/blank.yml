@@ -20,16 +20,10 @@ jobs:
         with:
           node-version: 12
 
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-
       - name: Install Node.js dependencies
         run: yarn install --frozen-lockfile
         env:
           SKIP_PREPARE: true
 
       - name: Run brighterscript
-        run: bsc --root-dir ./$GITHUB_WORKSPACE --copy-to-staging false
+        run: bsc --copy-to-staging false
