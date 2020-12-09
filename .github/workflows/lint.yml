@@ -25,11 +25,8 @@ jobs:
 #         env:
 #           SKIP_PREPARE: true
           
-      - name: Install brighterscript and bslint
-        run: yarn global add brighterscript @rokucommunity/bslint
-        
-#       - name: Install bslint module for brighterscript
-#         run: npm install @rokucommunity/bslint
+      - name: Install brighterscript
+        run: npm -g brighterscript
 
       - name: Lint with brighterscript
-        run: npx bslint
+        run: bsc --create-package false --copy-to-staging false
