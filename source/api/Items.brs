@@ -36,7 +36,7 @@ end function
 
 function ItemPostPlaybackInfo(id as string, StartTimeTicks = 0 as longinteger)
   body = {
-    "DeviceProfile": getDeviceProfile()
+    "DeviceProfile": getDeviceProfile() 'bs:disable-line
   }
   params = {
     "UserId": get_setting("active_user"),
