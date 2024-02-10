@@ -66,6 +66,7 @@ jobs:
           git checkout -b "bump-${{ env.refNameSlug }}-to-${{ env.newVersionSlug }}"
           git add .
           git commit -m "Bump ${{ github.event.inputs.versionType }} version"
+          git push
           gh pr create --base ${{ github.ref_name }} --fill
   minor:
     if: ${{ github.event.inputs.versionType == 'minor' }}
