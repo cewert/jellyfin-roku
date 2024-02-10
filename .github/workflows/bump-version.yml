@@ -1,8 +1,5 @@
 name: "Create PR to bump version"
 
-env:
-    GH_TOKEN: ${{ secrets.JF_BOT_TOKEN }}
-
 on:
   workflow_dispatch:
     branches:
@@ -24,6 +21,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Setup
+      - name: DEBUG
+        run: echo ${{ github.event.inputs.versionType }}
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
       - name: Install jq to manipulate json
@@ -59,6 +58,8 @@ jobs:
         run: sed -i "s/VERSION := .*/VERSION := ${{ env.newVersion }}/g" Makefile
       # Create PR
       - name: Create PR with new version
+        env:
+          GH_TOKEN: ${{ secrets.JF_BOT_TOKEN }}
         run: |-
           git config user.name "jellyfin-bot"
           git config user.email "team@jellyfin.org"
@@ -71,6 +72,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Setup
+      - name: DEBUG
+        run: echo ${{ github.event.inputs.versionType }}
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
       - name: Install jq to update json
@@ -108,6 +111,8 @@ jobs:
         run: sed -i "s/VERSION := .*/VERSION := ${{ env.newVersion }}/g" Makefile
       # Create PR
       - name: Create PR with new version
+        env:
+          GH_TOKEN: ${{ secrets.JF_BOT_TOKEN }}
         run: |-
           git config user.name "jellyfin-bot"
           git config user.email "team@jellyfin.org"
@@ -121,6 +126,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Setup
+      - name: DEBUG
+        run: echo ${{ github.event.inputs.versionType }}
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
       - name: Install jq to update json
@@ -160,6 +167,8 @@ jobs:
         run: sed -i "s/VERSION := .*/VERSION := ${{ env.newVersion }}/g" Makefile
       # Create PR
       - name: Create PR with new version
+        env:
+          GH_TOKEN: ${{ secrets.JF_BOT_TOKEN }}
         run: |-
           git config user.name "jellyfin-bot"
           git config user.email "team@jellyfin.org"
