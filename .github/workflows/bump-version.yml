@@ -44,6 +44,7 @@ jobs:
         with:
           packages: jq
       - name: Save targetBranch to env
+        if: github.event.inputs.targetBranch != 'bugfix'
         run: echo "targetBranch=${{ github.event.inputs.targetBranch }}" >> $GITHUB_ENV
       - name: Update targetBranch with actual bugfix branch name
         if: github.event.inputs.targetBranch == 'bugfix'
@@ -100,6 +101,7 @@ jobs:
         with:
           packages: jq
       - name: Save targetBranch to env
+        if: github.event.inputs.targetBranch != 'bugfix'
         run: echo "targetBranch=${{ github.event.inputs.targetBranch }}" >> $GITHUB_ENV
       - name: Update targetBranch with actual bugfix branch name
         if: github.event.inputs.targetBranch == 'bugfix'
@@ -159,6 +161,7 @@ jobs:
         with:
           packages: jq
       - name: Save targetBranch to env
+        if: github.event.inputs.targetBranch != 'bugfix'
         run: echo "targetBranch=${{ github.event.inputs.targetBranch }}" >> $GITHUB_ENV
       - name: Update targetBranch with actual bugfix branch name
         if: github.event.inputs.targetBranch == 'bugfix'
