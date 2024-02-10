@@ -17,7 +17,7 @@ on:
 
 jobs:
   build:
-    if: "${{ github.event.inputs.versionType == 'build' }}"
+    if: ${{ github.event.inputs.versionType == 'build' }}
     runs-on: ubuntu-latest
     steps:
       # Setup
@@ -63,12 +63,12 @@ jobs:
         run: |-
           git config user.name "jellyfin-bot"
           git config user.email "team@jellyfin.org"
-          git checkout -b bump-${{ env.refNameSlug }}-to-${{ env.newVersionSlug }}
+          git checkout -b "bump-${{ env.refNameSlug }}-to-${{ env.newVersionSlug }}"
           git add .
           git commit -m "Bump ${{ github.event.inputs.versionType }} version"
           gh pr create --base ${{ github.ref_name }} --head ${{ github.ref_name }} --fill
   minor:
-    if: "${{ github.event.inputs.versionType }} == 'minor'"
+    if: ${{ github.event.inputs.versionType == 'minor' }}
     runs-on: ubuntu-latest
     steps:
       # Setup
@@ -116,13 +116,13 @@ jobs:
         run: |-
           git config user.name "jellyfin-bot"
           git config user.email "team@jellyfin.org"
-          git checkout -b bump-${{ env.refNameSlug }}-to-${{ env.newVersionSlug }}
+          git checkout -b "bump-${{ env.refNameSlug }}-to-${{ env.newVersionSlug }}"
           git add .
           git commit -m "Bump ${{ github.event.inputs.versionType }} version"
           gh pr create --base ${{ github.ref_name }} --head ${{ github.ref_name }} --fill
       
   major:
-    if: "${{ github.event.inputs.versionType }} == 'major'"
+    if: ${{ github.event.inputs.versionType == 'major' }}
     runs-on: ubuntu-latest
     steps:
       # Setup
@@ -172,7 +172,7 @@ jobs:
         run: |-
           git config user.name "jellyfin-bot"
           git config user.email "team@jellyfin.org"
-          git checkout -b bump-${{ env.refNameSlug }}-to-${{ env.newVersionSlug }}
+          git checkout -b "bump-${{ env.refNameSlug }}-to-${{ env.newVersionSlug }}"
           git add .
           git commit -m "Bump ${{ github.event.inputs.versionType }} version"
           gh pr create --base ${{ github.ref_name }} --head ${{ github.ref_name }} --fill
