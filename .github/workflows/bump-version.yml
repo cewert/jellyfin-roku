@@ -48,7 +48,9 @@ jobs:
         run: echo "targetBranch=${{ github.event.inputs.targetBranch }}" >> $GITHUB_ENV
       - name: Update targetBranch with actual bugfix branch name
         if: github.event.inputs.targetBranch == 'bugfix'
-        run: echo "targetBranch=${{ needs.prep.outputs.bugBranch }}" >> $GITHUB_ENV
+        run: echo "targetBranch=$bugBranch" >> $GITHUB_ENV
+        env:
+          bugBranch: ${{ needs.prep.outputs.bugBranch }}
       # Save old version
       - name: Find and save old major_version from manifest
         run: awk 'BEGIN { FS="=" } /^major_version/ { print "oldMajor="$2; }' manifest >> $GITHUB_ENV
@@ -105,7 +107,9 @@ jobs:
         run: echo "targetBranch=${{ github.event.inputs.targetBranch }}" >> $GITHUB_ENV
       - name: Update targetBranch with actual bugfix branch name
         if: github.event.inputs.targetBranch == 'bugfix'
-        run: echo "targetBranch=${{ needs.prep.outputs.bugBranch }}" >> $GITHUB_ENV
+        run: echo "targetBranch=$bugBranch" >> $GITHUB_ENV
+        env:
+          bugBranch: ${{ needs.prep.outputs.bugBranch }}
       # Save old version
       - name: Find and save old major_version from manifest
         run: awk 'BEGIN { FS="=" } /^major_version/ { print "oldMajor="$2; }' manifest >> $GITHUB_ENV
@@ -165,7 +169,9 @@ jobs:
         run: echo "targetBranch=${{ github.event.inputs.targetBranch }}" >> $GITHUB_ENV
       - name: Update targetBranch with actual bugfix branch name
         if: github.event.inputs.targetBranch == 'bugfix'
-        run: echo "targetBranch=${{ needs.prep.outputs.bugBranch }}" >> $GITHUB_ENV
+        run: echo "targetBranch=$bugBranch" >> $GITHUB_ENV
+        env:
+          bugBranch: ${{ needs.prep.outputs.bugBranch }}
       # Save old version
       - name: Find and save old major_version from manifest
         run: awk 'BEGIN { FS="=" } /^major_version/ { print "oldMajor="$2; }' manifest >> $GITHUB_ENV
