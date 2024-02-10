@@ -68,6 +68,7 @@ jobs:
           git config user.name "jellyfin-bot"
           git config user.email "team@jellyfin.org"
           git checkout -b "${{ env.newBranch }}"
+          git pull
           git add .
           git commit -m "Bump ${{ github.event.inputs.versionType }} version"
           git push --set-upstream origin "${{ env.newBranch }}"
@@ -122,6 +123,7 @@ jobs:
           git config user.name "jellyfin-bot"
           git config user.email "team@jellyfin.org"
           git checkout -b "${{ env.newBranch }}"
+          git pull
           git add .
           git commit -m "Bump ${{ github.event.inputs.versionType }} version"
           git push --set-upstream origin "${{ env.newBranch }}"
@@ -179,6 +181,7 @@ jobs:
           git config user.name "jellyfin-bot"
           git config user.email "team@jellyfin.org"
           git checkout -b "${{ env.newBranch }}"
+          git pull
           git add .
           git commit -m "Bump ${{ github.event.inputs.versionType }} version"
           git push --set-upstream origin "${{ env.newBranch }}"
