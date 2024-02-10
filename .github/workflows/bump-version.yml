@@ -2,12 +2,16 @@ name: "Create PR to bump version"
 
 on:
   workflow_dispatch:
-    branches:
-      - master
-      - "*.*.z"
     inputs:
+      targetBranch:
+        description: 'Target Branch'
+        required: true
+        type: choice
+        options:
+        - bugfix
+        - master
       versionType:
-        description: 'Version to Bump'
+        description: 'What Version to Bump'
         required: true
         type: choice
         options:
@@ -29,8 +33,6 @@ jobs:
         uses: awalsh128/cache-apt-pkgs-action@latest
         with:
           packages: jq
-      - name: Save a copy of github.ref_name without periods to env var
-        run: echo "refNameSlug=${{ github.ref_name }}" | sed -e 's/\.//g' >> $GITHUB_ENV
       # Save old version
       - name: Find and save old major_version from manifest
         run: awk 'BEGIN { FS="=" } /^major_version/ { print "oldMajor="$2; }' manifest >> $GITHUB_ENV
@@ -57,16 +59,18 @@ jobs:
       - name: Update Makefile version
         run: sed -i "s/VERSION := .*/VERSION := ${{ env.newVersion }}/g" Makefile
       # Create PR
+      - name: Save new branch name to env
+        run: echo "newBranch=bump-${{ github.event.inputs.targetBranch }}-to-${{ env.newVersionSlug }}" >> $GITHUB_ENV
       - name: Create PR with new version
         env:
           GH_TOKEN: ${{ github.token }}
         run: |-
           git config user.name "jellyfin-bot"
           git config user.email "team@jellyfin.org"
-          git checkout -b "bump-${{ env.refNameSlug }}-to-${{ env.newVersionSlug }}"
+          git checkout -b "${{ env.newBranch }}"
           git add .
           git commit -m "Bump ${{ github.event.inputs.versionType }} version"
-          git push --set-upstream origin
+          git push --set-upstream origin "${{ env.newBranch }}"
           gh pr create --base ${{ github.ref_name }} --fill
   minor:
     if: ${{ github.event.inputs.versionType == 'minor' }}
@@ -81,8 +85,6 @@ jobs:
         uses: awalsh128/cache-apt-pkgs-action@latest
         with:
           packages: jq
-      - name: Save a copy of github.ref_name without periods to env var
-        run: echo "refNameSlug=${{ github.ref_name }}" | sed -e 's/\.//g' >> $GITHUB_ENV
       # Save old version
       - name: Find and save old major_version from manifest
         run: awk 'BEGIN { FS="=" } /^major_version/ { print "oldMajor="$2; }' manifest >> $GITHUB_ENV
@@ -111,15 +113,18 @@ jobs:
       - name: Update Makefile version
         run: sed -i "s/VERSION := .*/VERSION := ${{ env.newVersion }}/g" Makefile
       # Create PR
+      - name: Save new branch name to env
+        run: echo "newBranch=bump-${{ github.event.inputs.targetBranch }}-to-${{ env.newVersionSlug }}" >> $GITHUB_ENV
       - name: Create PR with new version
         env:
           GH_TOKEN: ${{ github.token }}
         run: |-
           git config user.name "jellyfin-bot"
           git config user.email "team@jellyfin.org"
-          git checkout -b "bump-${{ env.refNameSlug }}-to-${{ env.newVersionSlug }}"
+          git checkout -b "${{ env.newBranch }}"
           git add .
           git commit -m "Bump ${{ github.event.inputs.versionType }} version"
+          git push --set-upstream origin "${{ env.newBranch }}"
           gh pr create --base ${{ github.ref_name }} --fill
       
   major:
@@ -135,8 +140,6 @@ jobs:
         uses: awalsh128/cache-apt-pkgs-action@latest
         with:
           packages: jq
-      - name: Save a copy of github.ref_name without periods to env var
-        run: echo "refNameSlug=${{ github.ref_name }}" | sed -e 's/\.//g' >> $GITHUB_ENV
       # Save old version
       - name: Find and save old major_version from manifest
         run: awk 'BEGIN { FS="=" } /^major_version/ { print "oldMajor="$2; }' manifest >> $GITHUB_ENV
@@ -167,15 +170,18 @@ jobs:
       - name: Update Makefile version
         run: sed -i "s/VERSION := .*/VERSION := ${{ env.newVersion }}/g" Makefile
       # Create PR
+      - name: Save new branch name to env
+        run: echo "newBranch=bump-${{ github.event.inputs.targetBranch }}-to-${{ env.newVersionSlug }}" >> $GITHUB_ENV
       - name: Create PR with new version
         env:
           GH_TOKEN: ${{ github.token }}
         run: |-
           git config user.name "jellyfin-bot"
           git config user.email "team@jellyfin.org"
-          git checkout -b "bump-${{ env.refNameSlug }}-to-${{ env.newVersionSlug }}"
+          git checkout -b "${{ env.newBranch }}"
           git add .
           git commit -m "Bump ${{ github.event.inputs.versionType }} version"
+          git push --set-upstream origin "${{ env.newBranch }}"
           gh pr create --base ${{ github.ref_name }} --fill
       
 
