@@ -17,7 +17,7 @@ on:
 
 jobs:
   build:
-    if: ${{ github.event.inputs.versionType }} == 'build'
+    if: "${{ github.event.inputs.versionType == 'build' }}"
     runs-on: ubuntu-latest
     steps:
       # Setup
@@ -59,7 +59,7 @@ jobs:
       # Create PR
       - name: Create PR with new version
         env:
-          GH_TOKEN: ${{ secrets.JF_BOT_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
         run: |-
           git config user.name "jellyfin-bot"
           git config user.email "team@jellyfin.org"
@@ -68,7 +68,7 @@ jobs:
           git commit -m "Bump ${{ github.event.inputs.versionType }} version"
           gh pr create --base ${{ github.ref_name }} --head ${{ github.ref_name }} --fill
   minor:
-    if: ${{ github.event.inputs.versionType }} == 'minor'
+    if: "${{ github.event.inputs.versionType }} == 'minor'"
     runs-on: ubuntu-latest
     steps:
       # Setup
@@ -112,7 +112,7 @@ jobs:
       # Create PR
       - name: Create PR with new version
         env:
-          GH_TOKEN: ${{ secrets.JF_BOT_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
         run: |-
           git config user.name "jellyfin-bot"
           git config user.email "team@jellyfin.org"
@@ -122,7 +122,7 @@ jobs:
           gh pr create --base ${{ github.ref_name }} --head ${{ github.ref_name }} --fill
       
   major:
-    if: ${{ github.event.inputs.versionType }} == 'major'
+    if: "${{ github.event.inputs.versionType }} == 'major'"
     runs-on: ubuntu-latest
     steps:
       # Setup
@@ -168,7 +168,7 @@ jobs:
       # Create PR
       - name: Create PR with new version
         env:
-          GH_TOKEN: ${{ secrets.JF_BOT_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
         run: |-
           git config user.name "jellyfin-bot"
           git config user.email "team@jellyfin.org"
