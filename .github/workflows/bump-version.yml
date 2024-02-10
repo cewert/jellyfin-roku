@@ -20,19 +20,29 @@ on:
         - major
 
 jobs:
+  prep:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+      - name: Save bugfix branch name
+        run: echo "bugBranch=$(git branch --list *.*.z)" >> $GITHUB_ENV
   build:
     if: ${{ github.event.inputs.versionType == 'build' }}
     runs-on: ubuntu-latest
     steps:
       # Setup
-      - name: DEBUG
-        run: echo ${{ github.event.inputs.versionType }}
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
       - name: Install jq to manipulate json
         uses: awalsh128/cache-apt-pkgs-action@latest
         with:
           packages: jq
+      - name: Save targetBranch to env
+        run: echo "targetBranch=${{ github.event.inputs.targetBranch }}" >> $GITHUB_ENV
+      - name: Update targetBranch with actual bugfix branch name
+        if: github.event.inputs.targetBranch == 'bugfix'
+        run: echo "targetBranch=${{ env.bugBranch }}" >> $GITHUB_ENV
       # Save old version
       - name: Find and save old major_version from manifest
         run: awk 'BEGIN { FS="=" } /^major_version/ { print "oldMajor="$2; }' manifest >> $GITHUB_ENV
@@ -71,20 +81,23 @@ jobs:
           git add .
           git commit -m "Bump ${{ github.event.inputs.versionType }} version"
           git push --set-upstream origin "${{ env.newBranch }}"
-          gh pr create --title "Bump ${{ github.event.inputs.targetBranch }} branch to ${{ env.newVersion }}" --body "Bump version to prep for next release." --label ignore-changelog --base ${{ github.ref_name }} 
+          gh pr create --title "Bump ${{ github.event.inputs.targetBranch }} branch to ${{ env.newVersion }}" --body "Bump version to prep for next release." --label ignore-changelog --base ${{ env.targetBranch }} 
   minor:
     if: ${{ github.event.inputs.versionType == 'minor' }}
     runs-on: ubuntu-latest
     steps:
       # Setup
-      - name: DEBUG
-        run: echo ${{ github.event.inputs.versionType }}
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
       - name: Install jq to update json
         uses: awalsh128/cache-apt-pkgs-action@latest
         with:
           packages: jq
+      - name: Save targetBranch to env
+        run: echo "targetBranch=${{ github.event.inputs.targetBranch }}" >> $GITHUB_ENV
+      - name: Update targetBranch with actual bugfix branch name
+        if: github.event.inputs.targetBranch == 'bugfix'
+        run: echo "targetBranch=${{ env.bugBranch }}" >> $GITHUB_ENV
       # Save old version
       - name: Find and save old major_version from manifest
         run: awk 'BEGIN { FS="=" } /^major_version/ { print "oldMajor="$2; }' manifest >> $GITHUB_ENV
@@ -125,21 +138,24 @@ jobs:
           git add .
           git commit -m "Bump ${{ github.event.inputs.versionType }} version"
           git push --set-upstream origin "${{ env.newBranch }}"
-          gh pr create --title "Bump ${{ github.event.inputs.targetBranch }} branch to ${{ env.newVersion }}" --body "Bump version to prep for next release." --label ignore-changelog --base ${{ github.ref_name }} 
+          gh pr create --title "Bump ${{ github.event.inputs.targetBranch }} branch to ${{ env.newVersion }}" --body "Bump version to prep for next release." --label ignore-changelog --base ${{ env.targetBranch  }} 
       
   major:
     if: ${{ github.event.inputs.versionType == 'major' }}
     runs-on: ubuntu-latest
     steps:
       # Setup
-      - name: DEBUG
-        run: echo ${{ github.event.inputs.versionType }}
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
       - name: Install jq to update json
         uses: awalsh128/cache-apt-pkgs-action@latest
         with:
           packages: jq
+      - name: Save targetBranch to env
+        run: echo "targetBranch=${{ github.event.inputs.targetBranch }}" >> $GITHUB_ENV
+      - name: Update targetBranch with actual bugfix branch name
+        if: github.event.inputs.targetBranch == 'bugfix'
+        run: echo "targetBranch=${{ env.bugBranch }}" >> $GITHUB_ENV
       # Save old version
       - name: Find and save old major_version from manifest
         run: awk 'BEGIN { FS="=" } /^major_version/ { print "oldMajor="$2; }' manifest >> $GITHUB_ENV
@@ -182,6 +198,6 @@ jobs:
           git add .
           git commit -m "Bump ${{ github.event.inputs.versionType }} version"
           git push --set-upstream origin "${{ env.newBranch }}"
-          gh pr create --title "Bump ${{ github.event.inputs.targetBranch }} branch to ${{ env.newVersion }}" --body "Bump version to prep for next release." --label ignore-changelog --base ${{ github.ref_name }} 
+          gh pr create --title "Bump ${{ github.event.inputs.targetBranch }} branch to ${{ env.newVersion }}" --body "Bump version to prep for next release." --label ignore-changelog --base ${{ env.targetBranch  }} 
       
 
