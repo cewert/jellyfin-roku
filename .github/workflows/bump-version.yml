@@ -1,5 +1,8 @@
 name: "Create PR to bump version"
 
+env:
+    GH_TOKEN: ${{ secrets.JF_BOT_TOKEN }}
+
 on:
   workflow_dispatch:
     branches:
@@ -59,7 +62,7 @@ jobs:
         run: |-
           git config user.name "jellyfin-bot"
           git config user.email "team@jellyfin.org"
-          git checkout -b "bump-${{ env.refNameSlug }}-to-${{ env.newVersionSlug }}"
+          git checkout -b bump-${{ env.refNameSlug }}-to-${{ env.newVersionSlug }}
           git add .
           git commit -m "Bump ${{ github.event.inputs.versionType }} version"
           gh pr create --base ${{ github.ref_name }} --head ${{ github.ref_name }} --fill
@@ -108,7 +111,7 @@ jobs:
         run: |-
           git config user.name "jellyfin-bot"
           git config user.email "team@jellyfin.org"
-          git checkout -b "bump-${{ env.refNameSlug }}-to-${{ env.newVersionSlug }}"
+          git checkout -b bump-${{ env.refNameSlug }}-to-${{ env.newVersionSlug }}
           git add .
           git commit -m "Bump ${{ github.event.inputs.versionType }} version"
           gh pr create --base ${{ github.ref_name }} --head ${{ github.ref_name }} --fill
@@ -160,7 +163,7 @@ jobs:
         run: |-
           git config user.name "jellyfin-bot"
           git config user.email "team@jellyfin.org"
-          git checkout -b "bump-${{ env.refNameSlug }}-to-${{ env.newVersionSlug }}"
+          git checkout -b bump-${{ env.refNameSlug }}-to-${{ env.newVersionSlug }}
           git add .
           git commit -m "Bump ${{ github.event.inputs.versionType }} version"
           gh pr create --base ${{ github.ref_name }} --head ${{ github.ref_name }} --fill
