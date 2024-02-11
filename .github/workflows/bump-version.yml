@@ -29,18 +29,18 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
         with:
           fetch-depth: 0
-      - name: DEBUG
-        run: echo "thebugbranch=$(git branch --list *.*.z)" >> $GITHUB_ENV
       - name: Install jq to manipulate json
         uses: awalsh128/cache-apt-pkgs-action@latest
         with:
-          packages: jq
+          packages: jq git
+      - name: DEBUG
+        run: echo "thebugbranch=$(git branch --list *.*.z) | sed 's/ //g')" >> $GITHUB_ENV
       - name: Save targetBranch to env
         if: github.event.inputs.targetBranch != 'bugfix'
         run: echo "targetBranch=${{ github.event.inputs.targetBranch }}" >> $GITHUB_ENV
       - name: Update targetBranch with actual bugfix branch name
         if: github.event.inputs.targetBranch == 'bugfix'
-        run: echo "targetBranch=\"$(git branch --list *.*.z | sed 's/ //g')\"" >> $GITHUB_ENV
+        run: echo "targetBranch=$(git branch --list *.*.z | sed 's/ //g')" >> $GITHUB_ENV
       # Save old version
       - name: Find and save old major_version from manifest
         run: awk 'BEGIN { FS="=" } /^major_version/ { print "oldMajor="$2; }' manifest >> $GITHUB_ENV
