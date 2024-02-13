@@ -27,6 +27,8 @@ jobs:
       # Setup
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+        with:
+          ref: branch-name
       - name: Install required packages
         uses: awalsh128/cache-apt-pkgs-action@latest
         with:
@@ -48,6 +50,22 @@ jobs:
       - name: Update targetBranch with actual bugfix branch name
         if: github.event.inputs.targetBranch == 'bugfix'
         run: echo "targetBranch=${{ env.bugfixBranch }}" >> $GITHUB_ENV
+      # Checkout bugfix branch
+      - name: Checkout bugfix branch
+        if: github.event.inputs.targetBranch == 'bugfix'
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
+        with:
+          ref: ${{ env.targetBranch }}
+      # Save old version again if needed
+      - name: Find and save old major_version from manifest
+        if: github.event.inputs.targetBranch == 'bugfix'
+        run: awk 'BEGIN { FS="=" } /^major_version/ { print "oldMajor="$2; }' manifest >> $GITHUB_ENV
+      - name: Find and save old minor_version from manifest
+        if: github.event.inputs.targetBranch == 'bugfix'
+        run: awk 'BEGIN { FS="=" } /^minor_version/ { print "oldMinor="$2; }' manifest >> $GITHUB_ENV
+      - name: Find and save old build_version from manifest
+        if: github.event.inputs.targetBranch == 'bugfix'
+        run: awk 'BEGIN { FS="=" } /^build_version/ { print "oldBuild="$2; }' manifest >> $GITHUB_ENV
       # Calculate new version
       - name: Calculate new build_version
         run: echo "newBuild=$((${{ env.oldBuild }} + 1))" >> $GITHUB_ENV
