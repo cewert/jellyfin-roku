@@ -27,21 +27,13 @@ jobs:
       # Setup
       - name: Checkout code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
-        with:
-          fetch-depth: 0
-          fetch-tags: 'true'
-      - name: Install jq to manipulate json
+      - name: Install required packages
         uses: awalsh128/cache-apt-pkgs-action@latest
         with:
-          packages: jq git
-      - name: DEBUG
-        run: echo "thebugbranch=$(git branch --list *.*.z) | sed 's/ //g')" >> $GITHUB_ENV
+          packages: jq
       - name: Save targetBranch to env
         if: github.event.inputs.targetBranch != 'bugfix'
         run: echo "targetBranch=${{ github.event.inputs.targetBranch }}" >> $GITHUB_ENV
-      - name: Update targetBranch with actual bugfix branch name
-        if: github.event.inputs.targetBranch == 'bugfix'
-        run: echo "targetBranch=$(git branch --list *.*.z | sed 's/ //g')" >> $GITHUB_ENV
       # Save old version
       - name: Find and save old major_version from manifest
         run: awk 'BEGIN { FS="=" } /^major_version/ { print "oldMajor="$2; }' manifest >> $GITHUB_ENV
@@ -49,6 +41,13 @@ jobs:
         run: awk 'BEGIN { FS="=" } /^minor_version/ { print "oldMinor="$2; }' manifest >> $GITHUB_ENV
       - name: Find and save old build_version from manifest
         run: awk 'BEGIN { FS="=" } /^build_version/ { print "oldBuild="$2; }' manifest >> $GITHUB_ENV
+      # Save bugfix branch name
+      - name: Save bugfix branch name
+        if: github.event.inputs.targetBranch == 'bugfix'
+        run: echo "bugfixBranch=${{ env.oldMajor }}.${{ env.oldMinor }}.z" >> $GITHUB_ENV
+      - name: Update targetBranch with actual bugfix branch name
+        if: github.event.inputs.targetBranch == 'bugfix'
+        run: echo "targetBranch=${{ env.bugfixBranch }}" >> $GITHUB_ENV
       # Calculate new version
       - name: Calculate new build_version
         run: echo "newBuild=$((${{ env.oldBuild }} + 1))" >> $GITHUB_ENV
@@ -95,9 +94,6 @@ jobs:
       - name: Save targetBranch to env
         if: github.event.inputs.targetBranch != 'bugfix'
         run: echo "targetBranch=${{ github.event.inputs.targetBranch }}" >> $GITHUB_ENV
-      - name: Update targetBranch with actual bugfix branch name
-        if: github.event.inputs.targetBranch == 'bugfix'
-        run: echo "targetBranch=$(git branch --list *.*.z | sed 's/ //g')" >> $GITHUB_ENV
       # Save old version
       - name: Find and save old major_version from manifest
         run: awk 'BEGIN { FS="=" } /^major_version/ { print "oldMajor="$2; }' manifest >> $GITHUB_ENV
@@ -105,6 +101,13 @@ jobs:
         run: awk 'BEGIN { FS="=" } /^minor_version/ { print "oldMinor="$2; }' manifest >> $GITHUB_ENV
       - name: Find and save old build_version from manifest
         run: awk 'BEGIN { FS="=" } /^build_version/ { print "oldBuild="$2; }' manifest >> $GITHUB_ENV
+      # Save bugfix branch name
+      - name: Save bugfix branch name
+        if: github.event.inputs.targetBranch == 'bugfix'
+        run: echo "bugfixBranch=${{ env.oldMajor }}.${{ env.oldMinor }}.z" >> $GITHUB_ENV
+      - name: Update targetBranch with actual bugfix branch name
+        if: github.event.inputs.targetBranch == 'bugfix'
+        run: echo "targetBranch=${{ env.bugfixBranch }}" >> $GITHUB_ENV
       # Calculate new version
       - name: Calculate new build_version
         run: echo "newMinor=$((${{ env.oldMinor }} + 1))" >> $GITHUB_ENV
@@ -154,9 +157,6 @@ jobs:
       - name: Save targetBranch to env
         if: github.event.inputs.targetBranch != 'bugfix'
         run: echo "targetBranch=${{ github.event.inputs.targetBranch }}" >> $GITHUB_ENV
-      - name: Update targetBranch with actual bugfix branch name
-        if: github.event.inputs.targetBranch == 'bugfix'
-        run: echo "targetBranch=$(git branch --list *.*.z | sed 's/ //g')" >> $GITHUB_ENV
       # Save old version
       - name: Find and save old major_version from manifest
         run: awk 'BEGIN { FS="=" } /^major_version/ { print "oldMajor="$2; }' manifest >> $GITHUB_ENV
@@ -164,6 +164,13 @@ jobs:
         run: awk 'BEGIN { FS="=" } /^minor_version/ { print "oldMinor="$2; }' manifest >> $GITHUB_ENV
       - name: Find and save old build_version from manifest
         run: awk 'BEGIN { FS="=" } /^build_version/ { print "oldBuild="$2; }' manifest >> $GITHUB_ENV
+      # Save bugfix branch name
+      - name: Save bugfix branch name
+        if: github.event.inputs.targetBranch == 'bugfix'
+        run: echo "bugfixBranch=${{ env.oldMajor }}.${{ env.oldMinor }}.z" >> $GITHUB_ENV
+      - name: Update targetBranch with actual bugfix branch name
+        if: github.event.inputs.targetBranch == 'bugfix'
+        run: echo "targetBranch=${{ env.bugfixBranch }}" >> $GITHUB_ENV
       # Calculate new version
       - name: Calculate new build_version
         run: echo "newMajor=$((${{ env.oldMajor }} + 1))" >> $GITHUB_ENV
