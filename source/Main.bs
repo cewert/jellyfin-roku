@@ -36,6 +36,7 @@ sub Main (args as dynamic) as void
     sceneManager = CreateObject("roSGNode", "SceneManager")
     sceneManager.observeField("dataReturned", m.port)
 
+    ' this file has been edited
     m.global.addFields({ app_loaded: false, playstateTask: playstateTask, sceneManager: sceneManager })
     m.global.addFields({ queueManager: CreateObject("roSGNode", "QueueManager") })
     m.global.addFields({ audioPlayer: CreateObject("roSGNode", "AudioPlayer") })
