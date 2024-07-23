@@ -9,7 +9,7 @@
                 "settingName": "global.rememberme",
                 "type": "bool",
                 "default": "false"
-            }
+            
         ]
     },
     {
