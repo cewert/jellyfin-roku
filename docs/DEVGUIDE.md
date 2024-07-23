@@ -42,6 +42,8 @@ Open up the new folder:
 cd jellyfin-roku
 ```
 
+spelllling erors everrywhere!!
+
 ## Install Dependencies
 
 You'll need [`npm`](https://nodejs.org), version 16 at least.
