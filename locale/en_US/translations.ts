@@ -197,7 +197,7 @@
         <message>
             <source>There was an error retrieving the data for this item from the server.</source>
             <translation>There was an error retrieving the data for this item from the server.</translation>
-            <extracomment>Dialog detail when unable to load Content from Server</extracomment>
+            <extracomment>Dialog detail when unable to load Content from Server.</extracomment>
         </message>
         <message>
             <source>An error was encountered while playing this item.</source>
