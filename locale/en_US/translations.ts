@@ -112,10 +112,6 @@
       <translation>Always Hide</translation>
     </message>
     <message>
-      <source>Always Show</source>
-      <translation>Always Show</translation>
-    </message>
-    <message>
       <source>An error was encountered while playing this item.</source>
       <translation>An error was encountered while playing this item.</translation>
       <extracomment>Dialog detail when error occurs during playback</extracomment>
@@ -957,11 +953,6 @@
       <extracomment>UI -&gt; Media Grid -&gt; Item Title in user setting screen.</extracomment>
     </message>
     <message>
-      <source>Rewatching Next Up</source>
-      <translation>Rewatching Next Up</translation>
-      <extracomment>User Setting - Setting title</extracomment>
-    </message>
-    <message>
       <source>Row Layout</source>
       <translation>Row Layout</translation>
     </message>
@@ -1072,11 +1063,6 @@
     <message>
       <source>Settings that apply when Grid views are enabled.</source>
       <translation>Settings that apply when Grid views are enabled.</translation>
-    </message>
-    <message>
-      <source>Show already watched episodes in &apos;Next Up&apos; sections.</source>
-      <translation>Show already watched episodes in &apos;Next Up&apos; sections.</translation>
-      <extracomment>User Setting - Setting description</extracomment>
     </message>
     <message>
       <source>Show item count in the library and index of selected item.</source>
@@ -1302,11 +1288,6 @@
     <message>
       <source>URL:</source>
       <translation>URL:</translation>
-    </message>
-    <message>
-      <source>Use Episode Image</source>
-      <translation>Use Episode Image</translation>
-      <extracomment>User Setting - Setting option title</extracomment>
     </message>
     <message>
       <source>Use generated splashscreen image as Jellyfin&apos;s home background.</source>
