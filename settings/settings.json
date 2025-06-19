@@ -253,10 +253,6 @@
                 "id": "webclient"
               },
               {
-                "title": "Use Episode Image",
-                "id": "episode"
-              },
-              {
                 "title": "Use Show Image",
                 "id": "show"
               }
@@ -275,13 +271,6 @@
             "settingName": "ui.details.maxdaysnextup",
             "type": "integer",
             "default": "0"
-          },
-          {
-            "title": "Rewatching Next Up",
-            "description": "Show already watched episodes in 'Next Up' sections.",
-            "settingName": "ui.details.enablerewatchingnextup",
-            "type": "bool",
-            "default": "false"
           },
           {
             "title": "Row Layout",
@@ -354,10 +343,6 @@
                         "id": "showonhover"
                       },
                       {
-                        "title": "Always Show",
-                        "id": "showalways"
-                      },
-                      {
                         "title": "Always Hide",
                         "id": "hidealways"
                       }
@@ -399,10 +384,6 @@
                 "type": "radio",
                 "default": "moviesgrid",
                 "options": [
-                  {
-                    "title": "Movies (Presentation)",
-                    "id": "Movies"
-                  },
                   {
                     "title": "Movies (Grid)",
                     "id": "MoviesGrid"
